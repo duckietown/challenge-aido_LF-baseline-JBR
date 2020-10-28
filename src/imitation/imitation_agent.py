@@ -5,8 +5,8 @@ from dataclasses import dataclass
 
 import numpy as np
 import tensorflow as tf
-from aido_schemas import EpisodeStart, protocol_agent_duckiebot1, PWMCommands, Duckiebot1Commands, LEDSCommands, RGB, \
-    wrap_direct, Context, Duckiebot1Observations, JPGImage
+from aido_schemas import EpisodeStart, protocol_agent_DB20, PWMCommands, Duckiebot1Commands, LEDSCommands, RGB, \
+    wrap_direct, Context, DB20Observations, JPGImage
 
 from src.learning.cnn_models import load_graph, CNN96Model
 from src.utils.preprocessing import preprocess_image, prepare_for_the_model
@@ -40,7 +40,7 @@ class ImitationAgent:
         print(time.time(), 'on_received_episode_start')
         context.info(f'Starting episode "{data.episode_name}".')
 
-    def on_received_observations(self, data: Duckiebot1Observations):
+    def on_received_observations(self, data: DB20Observations):
         print(time.time(), 'on_received_observations')
         camera: JPGImage = data.camera
         self.config.current_image = jpg2rgb(camera.jpg_data)
@@ -94,7 +94,7 @@ def jpg2rgb(image_data: bytes) -> np.ndarray:
 
 def main():
     node = ImitationAgent()
-    protocol = protocol_agent_duckiebot1
+    protocol = protocol_agent_DB20
     wrap_direct(node=node, protocol=protocol)
 
 
