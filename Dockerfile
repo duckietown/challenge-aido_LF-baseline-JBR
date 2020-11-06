@@ -1,4 +1,5 @@
-FROM duckietown/challenge-aido_lf-template-tensorflow:daffy-amd64
+ARG AIDO_REGISTRY
+FROM ${AIDO_REGISTRY}/duckietown/challenge-aido_lf-template-tensorflow:daffy-amd64
 
 # let's create our workspace, we don't want to clutter the container
 RUN rm -r /workspace; mkdir /workspace
